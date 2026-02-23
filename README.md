@@ -256,6 +256,6 @@
 - Demonstration methods in `QuantityMeasurementApp` are generic and unified for all categories
 
 🔗 **Code Link:**  
-[UC9: Generic Quantity Class with Unit Interface for Multi-Category Support](https://github.com/Prashant-kumar-sharma/QuantityMeasurementApp/tree/feature/UC10-GenericQuantity)
+[UC10: Generic Quantity Class with Unit Interface for Multi-Category Support](https://github.com/Prashant-kumar-sharma/QuantityMeasurementApp/tree/feature/UC10-GenericQuantity)
 
 ---

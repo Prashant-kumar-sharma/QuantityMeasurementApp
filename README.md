@@ -102,3 +102,39 @@ measured in feet in the Quantity Measurement Application.
 
 🔗 *Code Link:*  
 [UC5: Unit-to-Unit Conversion](https://github.com/Prashant-kumar-sharma/QuantityMeasurementApp/tree/feature/UC5-UnitConversion)
+
+## 🗓 UC6: Addition of Two Length Units
+*(Date: 22-Feb-2026)*
+
+- Extending UC5 by introducing addition operations between two length measurements.
+- Enabling addition of two Quantity Length objects even if they belong to different units (same category: Length).
+- The result is returned in the unit of the first operand.
+- Validating:
+  - Both operands are non-null.
+  - Units are valid and belong to LengthUnit enum.
+  - Values are finite numbers (not NaN or Infinite).
+- Converting both operands to a common base unit (feet).
+- Adding the normalized values.
+- Converting the sum back to the unit of the first operand.
+- Returning a new Quantity Length object (immutability principle).
+- Throwing IllegalArgumentException for invalid inputs.
+
+- Creating JUnit test cases :
+  - testAddition_SameUnit_FeetPlusFeet()
+  - testAddition_SameUnit_InchPlusInch()
+  - testAddition_CrossUnit_FeetPlusInches()
+  - testAddition_CrossUnit_InchPlusFeet()
+  - testAddition_CrossUnit_YardPlusFeet()
+  - testAddition_CrossUnit_CentimeterPlusInch()
+  - testAddition_Commutativity()
+  - testAddition_WithZero()
+  - testAddition_NegativeValues()
+  - testAddition_NullSecondOperand()
+  - testAddition_LargeValues()
+  - testAddition_SmallValues()
+
+🔗 *Code Link:*  
+[UC6: Addition of Two Length Units](https://github.com/Prashant-kumar-sharma/QuantityMeasurementApp/tree/feature/UC6-UnitAddition)
+
+
+

@@ -50,30 +50,7 @@ public class Quantity<U extends IMeasurable> {
         return new Quantity<>(round(finalValue), targetUnit);
     }
 
-    public Quantity<U> subtract(Quantity<U> other) {
-        return subtract(other, this.unit);
-    }
-
-    public Quantity<U> subtract(Quantity<U> other, U targetUnit) {
-        validateOperation(other);
-
-        double baseResult = this.unit.convertToBaseUnit(this.value) - other.unit.convertToBaseUnit(other.value);
-
-        double finalValue = targetUnit.convertFromBaseUnit(baseResult);
-        return new Quantity<>(round(finalValue), targetUnit);
-    }
-
-    public double divide(Quantity<U> other) {
-        validateOperation(other);
-
-        double divisorBase = other.unit.convertToBaseUnit(other.value);
-        if (Math.abs(divisorBase) < EPSILON)
-            throw new ArithmeticException("Division by zero");
-
-        double dividendBase = this.unit.convertToBaseUnit(this.value);
-        return round(dividendBase / divisorBase);
-    }
-
+   
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;

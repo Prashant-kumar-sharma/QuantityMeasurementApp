@@ -31,11 +31,6 @@ buildNumber.properties
 .factorypath
 .recommenders/
 
-# =========================
-# Spring Boot
-# =========================
-*.pid
-*.pid.lock
 
 # =========================
 # OS files

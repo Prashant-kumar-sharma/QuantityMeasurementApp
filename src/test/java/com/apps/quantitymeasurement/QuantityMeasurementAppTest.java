@@ -3,10 +3,16 @@ package com.apps.quantitymeasurement;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.lang.reflect.Method;
+import com.apps.quantitymeasurement.unit.LengthUnit;
+import com.apps.quantitymeasurement.unit.VolumeUnit;
+import com.apps.quantitymeasurement.unit.WeightUnit;
+import com.apps.quantitymeasurement.unit.TemperatureUnit;
+import com.apps.quantitymeasurement.quantity.Quantity;
+import com.apps.quantitymeasurement.unit.IMeasurable;
 
 public class QuantityMeasurementAppTest {
-	private static final double EPSILON = 0.0001;
+
+    private static final double EPSILON = 0.0001;
 
 	@Test
 	void testEquality_LitreToLitre_SameValue() {

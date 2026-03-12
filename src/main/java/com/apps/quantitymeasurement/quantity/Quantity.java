@@ -1,4 +1,6 @@
-package com.apps.quantitymeasurement;
+package com.apps.quantitymeasurement.quantity;
+
+import com.apps.quantitymeasurement.unit.IMeasurable;
 
 import java.util.function.DoubleBinaryOperator;
 

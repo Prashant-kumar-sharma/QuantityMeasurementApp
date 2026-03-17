@@ -383,3 +383,36 @@
 [UC14: Temperature Measurement with Selective Arithmetic Support and IMeasurable Refactoring](https://github.com/Prashant-kumar-sharma/QuantityMeasurementApp/tree/feature/UC14-TemperatureManagement)
 
 ---
+
+# Quantity Measurement App – UC15 (N-Tier Architecture Refactoring)
+
+### 📌 Overview
+
+- This module refactors the application into a **clean N-Tier architecture**.
+- It separates responsibilities into **Controller, Service, Repository, and Entity layers**.
+- Improves **scalability, maintainability, and testability** while preserving all existing functionality.
+
+### ⚙️ Use Case: UC15 – N-Tier Architecture Implementation
+
+- Introduces layered architecture for better separation of concerns  
+- Delegates responsibilities across controller, service, and repository layers  
+- Enables independent testing and extension of each layer  
+- Maintains backward compatibility with UC1–UC14  
+
+### ⚙️ Key Implementation Points
+
+- **Controller Layer** → Handles input/output and delegates to service  
+- **Service Layer** → Contains core business logic (comparison, conversion, arithmetic)  
+- **Repository Layer** → Abstracts data persistence (cache-based implementation)  
+- **Entity/DTO Layer** → Standardised data transfer and storage objects  
+- Uses **Dependency Injection** for loose coupling  
+- Implements **Interface Segregation Principle** via service & repository interfaces  
+- Introduces `QuantityDTO`, `QuantityModel`, and `QuantityMeasurementEntity`  
+- Repository implemented as **Singleton (Cache Repository)**  
+- Follows **SOLID principles** and clean architecture design  
+- Enables future extensibility (REST APIs, DB integration, etc.)  
+
+🔗 **Code Link:**  
+[UC15: N-Tier Architecture Refactoring](https://github.com/Prashant-kumar-sharma/QuantityMeasurementApp/tree/feature/UC15-N-Tier)
+
+---

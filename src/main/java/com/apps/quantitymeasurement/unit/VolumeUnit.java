@@ -36,4 +36,19 @@ public enum VolumeUnit implements IMeasurable {
     public IMeasurable getUnitInstance(String name) {
         return VolumeUnit.valueOf(name.toUpperCase());
     }
+
+    @Override
+    public boolean supportsArithmetic() {
+        return true;   // volume supports add/subtract/divide
+    }
+
+    @Override
+    public void validateOperationSupport(String operation) {
+        // all arithmetic operations allowed
+    }
+
+    @Override
+    public String getMeasurementType() {
+        return "VOLUME";
+    }
 }

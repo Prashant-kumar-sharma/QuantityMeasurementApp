@@ -416,3 +416,46 @@
 [UC15: N-Tier Architecture Refactoring](https://github.com/Prashant-kumar-sharma/QuantityMeasurementApp/tree/feature/UC15-N-Tier)
 
 ---
+
+# Quantity Measurement App – UC16 (Database Integration with JDBC)
+
+### 📌 Overview
+
+- This module enhances the application by adding **database persistence using JDBC**.
+- Replaces in-memory storage with a **database-backed repository**.
+- Enables **audit trails, historical data storage, and scalable persistence**.
+
+### ⚙️ Use Case: UC16 – Database Persistence with JDBC
+
+- Stores quantity measurement operations in a relational database  
+- Retrieves historical measurement data  
+- Supports switching between cache and database repositories  
+- Enables persistent storage across application restarts  
+
+### ⚙️ Key Implementation Points
+
+- Introduces `QuantityMeasurementDatabaseRepository` using **JDBC**  
+- Uses **connection pooling** for efficient DB access  
+- Implements **parameterized SQL queries** (prevents SQL injection)  
+- Adds **transaction management** for consistency  
+- Database schema managed via `schema.sql`  
+- Configuration handled via `application.properties`  
+- Supports **H2 (default), MySQL, PostgreSQL** (configurable)  
+- Follows **Maven standard project structure**  
+- Adds dependencies: JDBC, H2, SLF4J, Logback, Mockito, JUnit  
+- Separates **test and production databases**  
+- Maintains backward compatibility with UC15 via interface-based repository  
+- Improves scalability, concurrency handling, and query capabilities over cache  
+
+### ⚙️ Key Improvements Over UC15
+
+- Persistent storage (no data loss on restart)  
+- Supports concurrent access and transactions  
+- Enables SQL-based querying and reporting  
+- Better debugging, monitoring, and analytics support  
+- Scales beyond memory limitations  
+
+🔗 **Code Link:**  
+[UC16: Database Integration with JDBC](https://github.com/Prashant-kumar-sharma/QuantityMeasurementApp/tree/feature/UC16-DatabaseIntegration)
+
+---

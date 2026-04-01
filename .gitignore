@@ -1,39 +1,169 @@
-# Build output
+# Maven
 target/
-HELP.md
-bin/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
 
-
-# IDE metadata — Eclipse / STS
-.settings/
-.classpath
-.factorypath
-.project
-
-# IDE metadata — IntelliJ IDEA
+# IDEs
+# IntelliJ IDEA
 .idea/
-*.iml
 *.iws
+*.iml
 *.ipr
+out/
+bin/
+*.class
 
-# IDE metadata — VS Code
+# Eclipse
+.classpath
+.project
+.settings/
+.factorypath
+.apt_generated/
+.springBeans
+.sts4-cache/
+
+# NetBeans
+nbactions.xml
+nb-configuration.xml
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+
+# VS Code
 .vscode/
 
-# OS artefacts
+# OS
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
 
-# Java compiled output (should never reach VCS)
+# Java
 *.class
 *.jar
 *.war
+*.nar
 *.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Logs
 *.log
+*.log.*
+logs/
+log/
 
-# H2 persistent database files (dev only)
-data/*.mv.db
-data/*.trace.db
-data/*.ser
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
 
-# Environment / secrets — never commit real credentials
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+
+# nyc test coverage
+.nyc_output
+
+# Grunt intermediate storage
+.grunt
+
+# Bower dependency directory
+bower_components
+
+# node-waf configuration
+.lock-wscript
+
+# Compiled binary addons
+build/Release
+
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# TypeScript v1 declaration files
+typings/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variables file
 .env
+.env.example
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# parcel-bundler cache
+.cache
+.parcel-cache
+
+# next.js build output
+.next
+
+# nuxt.js build output
+.nuxt
+
+# vuepress build output
+.vuepress/dist
+
+# Serverless directories
+.serverless
+
+# FuseBox cache
+.fusebox/
+
+# DynamoDB Local files
+.dynamodb/
+
+# TernJS port file
+.tern-port
+
+# Stores VSCode versions used for testing VSCode extensions
+.vscode-test
+
+# Local database and data files
+data/
+*.db
+*.sqlite
+*.sqlite3
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# Application specific
+logs/
+work/
+target/

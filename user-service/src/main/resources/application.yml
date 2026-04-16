@@ -6,7 +6,7 @@ spring:
         name: user-service
 
     datasource:
-        url: jdbc:mysql://localhost:3306/quantitymeasurement_user_db?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+        url: jdbc:mysql://mysql:3306/quantitymeasurement_user_db?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
         driver-class-name: com.mysql.cj.jdbc.Driver
         username: ${DB_USERNAME:root}
         password: ${DB_PASSWORD:root}
@@ -31,15 +31,6 @@ spring:
             enabled: ${H2_CONSOLE_ENABLED:false}
             path: /h2-console
 
-    boot:
-        admin:
-            client:
-                url: http://localhost:9090
-                instance:
-                    prefer-ip: true
-                username: admin
-                password: "admin123"
-
     cloud:
         loadbalancer:
             retry:
@@ -48,7 +39,7 @@ spring:
 eureka:
     client:
         service-url:
-            defaultZone: ${EUREKA_SERVER_URL:http://localhost:8761/eureka/}
+            defaultZone: ${EUREKA_SERVER_URL:http://eureka-server:8761/eureka/}
         fetch-registry: true
         register-with-eureka: true
         healthcheck:

@@ -58,17 +58,17 @@ spring:
                       - RewritePath=/api/convert/(?<segment>.*), /api/user/quantities/convert/${segment}
 
                 - id: swagger-ui-html-route
-                  uri: http://localhost:8080
+                  uri: http://api-gateway:8080
                   predicates:
                       - Path=/swagger-ui.html
 
                 - id: swagger-ui-resources-route
-                  uri: http://localhost:8080
+                  uri: http://api-gateway:8080
                   predicates:
                       - Path=/swagger-ui/**
 
                 - id: api-docs-route
-                  uri: http://localhost:8080
+                  uri: http://api-gateway:8080
                   predicates:
                       - Path=/v3/api-docs/**
 
@@ -88,19 +88,10 @@ spring:
             retry:
                 enabled: true
 
-    boot:
-        admin:
-            client:
-                url: http://localhost:9090
-                instance:
-                    prefer-ip: true
-                username: admin
-                password: "admin123"
-
 eureka:
     client:
         service-url:
-            defaultZone: ${EUREKA_SERVER_URL:http://localhost:8761/eureka/}
+            defaultZone: ${EUREKA_SERVER_URL:http://eureka-server:8761/eureka/}
         fetch-registry: true
         register-with-eureka: true
         healthcheck:

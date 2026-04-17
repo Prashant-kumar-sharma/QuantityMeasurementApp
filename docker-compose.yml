@@ -5,7 +5,7 @@ services:
     image: mysql:8.0
     container_name: qm-mysql
     environment:
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-Deepanshu}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-root}
       MYSQL_DATABASE: quantitymeasurement_db
     ports:
       - "3307:3306"
@@ -14,7 +14,7 @@ services:
     networks:
       - qm-network
     healthcheck:
-      test: ["CMD-SHELL", "mysqladmin ping -h localhost -p$${MYSQL_ROOT_PASSWORD} --silent"]
+      test: [ "CMD-SHELL", "mysqladmin ping -h localhost -p$${MYSQL_ROOT_PASSWORD} --silent" ]
       interval: 10s
       timeout: 5s
       retries: 12
@@ -131,6 +131,16 @@ services:
     networks:
       - qm-network
 
+  frontend:
+    build:
+      context: ../QuantityMeasurementApp-Frontend
+    container_name: qm-frontend
+    ports:
+      - "4200:80"
+    depends_on:
+      - api-gateway
+    networks:
+      - qm-network
 networks:
   qm-network:
     driver: bridge

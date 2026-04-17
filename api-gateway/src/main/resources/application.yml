@@ -1,130 +1,170 @@
 server:
-    port: ${SERVER_PORT:8080}
-    forward-headers-strategy: FRAMEWORK
+  port: ${SERVER_PORT:8080}
+  forward-headers-strategy: framework
 
 spring:
-    application:
-        name: api-gateway
+  application:
+    name: api-gateway
 
-    cloud:
-        gateway:
-            x-forwarded:
-                enabled: true
+  cloud:
+    gateway:
+      x-forwarded:
+        enabled: true
 
-            globalcors:
-                cors-configurations:
-                    "[/**]":
-                        allowed-origins: "http://localhost:4200"
-                        allowed-methods:
-                            - GET
-                            - POST
-                            - PUT
-                            - DELETE
-                            - OPTIONS
-                            - PATCH
-                        allowed-headers: "*"
-                        allow-credentials: true
-                add-to-simple-url-handler-mapping: true
+      globalcors:
+        cors-configurations:
+          "[/**]":
+            allowed-origins: "http://localhost:4200"
+            allowed-methods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+              - PATCH
+            allowed-headers: "*"
+            allow-credentials: true
+        add-to-simple-url-handler-mapping: true
 
-            default-filters:
-                - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
 
-            routes:
-                - id: auth-route
-                  uri: lb://auth-service
-                  predicates:
-                      - Path=/api/auth/**
+      routes:
+        # =========================
+        # AUTH SERVICE
+        # =========================
+        - id: auth-route
+          uri: lb://auth-service
+          predicates:
+            - Path=/api/auth/**
 
-                - id: measurement-route
-                  uri: lb://measurement-service
-                  predicates:
-                      - Path=/api/user/quantities/**
+        - id: user-profile-route
+          uri: lb://auth-service
+          predicates:
+            - Path=/api/user/me
 
-                - id: user-profile-route
-                  uri: lb://auth-service
-                  predicates:
-                      - Path=/api/user/me
+        # =========================
+        # MEASUREMENT SERVICE
+        # =========================
+        - id: measurement-route
+          uri: lb://measurement-service
+          predicates:
+            - Path=/api/user/quantities/**
 
-                - id: user-history-route
-                  uri: lb://user-service
-                  predicates:
-                      - Path=/api/users/**
+        - id: convert-route
+          uri: lb://measurement-service
+          predicates:
+            - Path=/api/convert/**
+          filters:
+            - RewritePath=/api/convert/(?<segment>.*), /api/user/quantities/convert/${segment}
 
-                - id: convert-route
-                  uri: lb://measurement-service
-                  predicates:
-                      - Path=/api/convert/**
-                  filters:
-                      - RewritePath=/api/convert/(?<segment>.*), /api/user/quantities/convert/${segment}
+        - id: history-alias-route
+          uri: lb://measurement-service
+          predicates:
+            - Path=/api/user/history/**
+          filters:
+            - RewritePath=/api/user/history/(?<segment>.*), /api/user/quantities/history/${segment}
 
-                - id: swagger-ui-html-route
-                  uri: http://api-gateway:8080
-                  predicates:
-                      - Path=/swagger-ui.html
+        # =========================
+        # USER SERVICE
+        # =========================
+        - id: user-history-route
+          uri: lb://user-service
+          predicates:
+            - Path=/api/users/**
 
-                - id: swagger-ui-resources-route
-                  uri: http://api-gateway:8080
-                  predicates:
-                      - Path=/swagger-ui/**
+        # =========================
+        # SWAGGER DOC ROUTES (🔥 IMPORTANT)
+        # =========================
+        - id: auth-service-docs
+          uri: lb://auth-service
+          predicates:
+            - Path=/v3/api-docs/auth-service
+          filters:
+            - RewritePath=/v3/api-docs/auth-service, /v3/api-docs
 
-                - id: api-docs-route
-                  uri: http://api-gateway:8080
-                  predicates:
-                      - Path=/v3/api-docs/**
+        - id: measurement-service-docs
+          uri: lb://measurement-service
+          predicates:
+            - Path=/v3/api-docs/measurement-service
+          filters:
+            - RewritePath=/v3/api-docs/measurement-service, /v3/api-docs
 
-                - id: oauth2-route
-                  uri: lb://auth-service
-                  predicates:
-                      - Path=/oauth2/**,/login/oauth2/**
+        - id: user-service-docs
+          uri: lb://user-service
+          predicates:
+            - Path=/v3/api-docs/user-service
+          filters:
+            - RewritePath=/v3/api-docs/user-service, /v3/api-docs
 
-                - id: history-alias-route
-                  uri: lb://measurement-service
-                  predicates:
-                      - Path=/api/user/history/**
-                  filters:
-                      - RewritePath=/api/user/history/(?<segment>.*), /api/user/quantities/history/${segment}
+        # =========================
+        # OAUTH
+        # =========================
+        - id: oauth2-route
+          uri: lb://auth-service
+          predicates:
+            - Path=/oauth2/**,/login/oauth2/**
 
-        loadbalancer:
-            retry:
-                enabled: true
+    loadbalancer:
+      retry:
+        enabled: true
 
+# =========================
+# EUREKA
+# =========================
 eureka:
-    client:
-        service-url:
-            defaultZone: ${EUREKA_SERVER_URL:http://eureka-server:8761/eureka/}
-        fetch-registry: true
-        register-with-eureka: true
-        healthcheck:
-            enabled: true
-        registry-fetch-interval-seconds: 10
-        initial-instance-info-replication-interval-seconds: 10
-        eureka-server-connect-timeout-seconds: 5
-        eureka-server-read-timeout-seconds: 8
+  client:
+    service-url:
+      defaultZone: ${EUREKA_SERVER_URL:http://eureka-server:8761/eureka/}
+    fetch-registry: true
+    register-with-eureka: true
+    healthcheck:
+      enabled: true
+    registry-fetch-interval-seconds: 10
+    initial-instance-info-replication-interval-seconds: 10
+    eureka-server-connect-timeout-seconds: 5
+    eureka-server-read-timeout-seconds: 8
 
-    instance:
-        prefer-ip-address: true
+  instance:
+    prefer-ip-address: true
 
+# =========================
+# ACTUATOR
+# =========================
 management:
-    endpoints:
-        web:
-            exposure:
-                include: "*"
-            base-path: /actuator
-    endpoint:
-        health:
-            show-details: always
-    info:
-        env:
-            enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: always
+  info:
+    env:
+      enabled: true
 
+# =========================
+# SWAGGER CONFIG (🔥 FINAL)
+# =========================
 springdoc:
-    swagger-ui:
-        path: /swagger-ui.html
-    api-docs:
-        path: /v3/api-docs
-    show-actuator: true
+  swagger-ui:
+    path: /swagger-ui.html
+    urls:
+      - name: Auth Service
+        url: /v3/api-docs/auth-service
+      - name: Measurement Service
+        url: /v3/api-docs/measurement-service
+      - name: User Service
+        url: /v3/api-docs/user-service
+  api-docs:
+    path: /v3/api-docs
+  show-actuator: true
 
+# =========================
+# LOGGING
+# =========================
 logging:
-    level:
-        org.springframework.cloud.gateway: INFO
-        com.quantitymeasurement.api_gateway: DEBUG
+  level:
+    org.springframework.cloud.gateway: INFO
+    com.quantitymeasurement.api_gateway: DEBUG

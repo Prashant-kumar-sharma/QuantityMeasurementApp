@@ -17,6 +17,9 @@ import com.app.quantitymeasurement.unit.TemperatureUnit;
 import com.app.quantitymeasurement.unit.VolumeUnit;
 import com.app.quantitymeasurement.unit.WeightUnit;
 
+import com.app.quantitymeasurement.client.UserServiceClient;
+import com.app.quantitymeasurement.dto.ConversionHistoryRequest;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -40,6 +43,7 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
     private static final String CACHE_KEY_ERRORS = "history:errors:%s";
 
     private final QuantityMeasurementRepository repository;
+    private final UserServiceClient userServiceClient;
 
 
     private Long getCurrentUserIdRaw() {
@@ -201,6 +205,19 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
             Long userId = getCurrentUserIdRaw();
             entity.setUserId(userId);
             repository.save(entity);
+
+            try {
+                ConversionHistoryRequest feignReq = new ConversionHistoryRequest();
+                feignReq.setType(quantity.getMeasurementType());
+                feignReq.setFromUnit(quantity.getUnit());
+                feignReq.setToUnit(targetUnit);
+                feignReq.setInputValue(quantity.getValue());
+                feignReq.setOutputValue(result);
+                userServiceClient.saveHistory(userId, feignReq);
+                log.debug("Successfully sent conversion history to user-service for user {}", userId);
+            } catch (Exception e) {
+                log.error("Failed to save history via user-service client: {}", e.getMessage());
+            }
 
             // Invalidate relevant caches
             evictCachesForOperation("CONVERT");

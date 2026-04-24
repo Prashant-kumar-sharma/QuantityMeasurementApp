@@ -29,7 +29,7 @@ spring:
                     google:
                         client-id: ${GOOGLE_CLIENT_ID}
                         client-secret: ${GOOGLE_CLIENT_SECRET}
-                        redirect-uri: ${APP_OAUTH2_GOOGLE_REDIRECT_URI:http://localhost:8080/login/oauth2/code/google}
+                        redirect-uri: ${APP_OAUTH2_GOOGLE_REDIRECT_URI:http://prashantlab.me:8080/login/oauth2/code/google}
                         scope:
                             - profile
                             - email
@@ -75,10 +75,10 @@ app:
         token-secret: ${APP_AUTH_TOKEN_SECRET:DefaultSecretKeyThatIsAtLeast32BytesLongForSecurity123!}
         token-expiration-msec: ${APP_AUTH_TOKEN_EXPIRATION_MSEC:864000000}
         refresh-token-expiration-msec: ${APP_AUTH_REFRESH_TOKEN_EXPIRATION_MSEC:2592000000}
-        reset-password-url: ${APP_RESET_PASSWORD_URL:http://localhost:4200/reset-password}
+        reset-password-url: ${APP_RESET_PASSWORD_URL:http://prashantlab.me/reset-password}
 
     oauth2:
-        redirectUri: ${APP_OAUTH2_REDIRECT_URI:http://localhost:4200/oauth2/redirect}
+        redirectUri: ${APP_OAUTH2_REDIRECT_URI:http://prashantlab.me/oauth2/redirect}
 
 management:
     endpoints:

@@ -141,7 +141,7 @@ services:
     image: prashar85211/qm-frontend:latest
     container_name: qm-frontend
     ports:
-      - "4200:80"
+      - "80:80"
     depends_on:
       - api-gateway
     networks:
